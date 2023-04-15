@@ -9,6 +9,8 @@ use Slim\Exception\HttpNotFoundException;
 use Exception;
 use App\Classes\Budget;
 use App\Classes\CalculatorOfImposts;
+use App\Classes\Imposts\Icms;
+use App\Classes\Imposts\Iss;
 
 final class ImpostController
 {
@@ -18,6 +20,7 @@ final class ImpostController
     protected array $args;
     protected Budget $budget;
     protected CalculatorOfImposts $calculateOfImpost;
+
 
     public function __construct(LoggerInterface $logger)
     {
@@ -31,12 +34,12 @@ final class ImpostController
             $this->calculateOfImpost = new CalculatorOfImposts();
             $this->budget->value = 100;
 
-            $budgetIcms = $this->calculateOfImpost->calculate($this->budget, "ICMS");
-            $budgetIss = $this->calculateOfImpost->calculate($this->budget, "ISS");
+            $icms = $this->calculateOfImpost->calculate($this->budget, new Icms());
+            $iss = $this->calculateOfImpost->calculate($this->budget, new Iss());
 
             $result = [
-                 "budget_icms" => $budgetIcms,
-                "budget_iss" => $budgetIss,
+                "budget_icms" => $icms,
+                "budget_iss" =>  $iss,
             ];
 
             $response->getBody()->write(
@@ -46,13 +49,13 @@ final class ImpostController
                 )
             );
 
-            $this->logger->info("Get Impost Controller");
+            $this->logger->info("Get Impost Controller -> " . json_encode($result));
 
             return $response
                 ->withHeader('Content-Type', 'application/json')
                 ->withStatus(200);
         } catch (Exception $e) {
-            $this->logger->info("Get Impost Controller" . $e->getMessage());
+            $this->logger->error("Get Impost Controller ->" . $e->getMessage());
             throw new HttpNotFoundException($this->request, $e->getMessage());
         }
     }
