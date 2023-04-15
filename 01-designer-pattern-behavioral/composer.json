@@ -1,0 +1,81 @@
+{
+  "name": "slim/slim-skeleton",
+  "description": "A Slim Framework skeleton application for rapid development",
+  "keywords": [
+    "microframework",
+    "rest",
+    "router",
+    "psr7"
+  ],
+  "homepage": "http://github.com/slimphp/Slim-Skeleton",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Josh Lockhart",
+      "email": "info@joshlockhart.com",
+      "homepage": "http://www.joshlockhart.com/"
+    },
+    {
+      "name": "Pierre Berube",
+      "email": "pierre@lgse.com",
+      "homepage": "http://www.lgse.com/"
+    }
+  ],
+  "require": {
+    "php": "^7.4 || ^8.0",
+    "ext-json": "*",
+    "doctrine/dbal": "^3.5",
+    "fzaninotto/faker": "^1.5",
+    "illuminate/cache": "^9.52",
+    "illuminate/database": "^9.43",
+    "illuminate/events": "^9.43",
+    "illuminate/filesystem": "^9.43",
+    "illuminate/pagination": "^9.43",
+    "illuminate/support": "^9.51",
+    "monolog/monolog": "^2.8",
+    "php-di/php-di": "^6.4",
+    "ramsey/uuid": "4.7.3",
+    "robmorgan/phinx": "0.13.3",
+    "slim/psr7": "^1.6",
+    "slim/slim": "4.*",
+    "vlucas/phpdotenv": "^5.5"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.16",
+    "jangregor/phpstan-prophecy": "^1.0.0",
+    "phpmd/phpmd": "^2.13",
+    "phpspec/prophecy-phpunit": "^2.0",
+    "phpstan/extension-installer": "^1.2.0",
+    "phpstan/phpstan": "^1.9",
+    "phpunit/phpunit": "^9.5.26",
+    "squizlabs/php_codesniffer": "^3.7"
+  },
+  "config": {
+    "allow-plugins": {
+      "phpstan/extension-installer": true
+    },
+    "process-timeout": 0,
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/app/",
+      "Src\\": "src/",
+      "Database\\Factories\\": "src/database/factories/",
+      "Database\\Seeders\\": "src/database/seeders/",
+      "Migrations\\": "src/database/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "start": "php -S localhost:8086 -t public",
+    "migrations": "./vendor/bin/phinx migrate -c src/config/phinx.php",
+    "test": "./vendor/bin/phpunit",
+    "phpcs-linter": "./vendor/bin/phpcs ./src --standard=./phpcs.xml --report-file=./.logs/code_sniffer_error.txt",
+    "phpcs-fixer": "./vendor/bin/php-cs-fixer fix ./src"
+  }
+}
