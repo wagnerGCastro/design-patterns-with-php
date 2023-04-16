@@ -10,6 +10,7 @@ use App\Application\Database\Bootstrap as BootstrapEloquent;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ImpostController;
+use App\Http\Controllers\DiscountController;
 
 return function (App $app) {
     $container = $app->getContainer();
@@ -29,8 +30,15 @@ return function (App $app) {
             $group->get('', UserController::class . ':index');
         });
 
+        // strategy
         $group->group('/impost', function (Group $group) {
             $group->get('', ImpostController::class . ':index');
         });
+
+        //
+        $group->group('/discount', function (Group $group) {
+            $group->get('', DiscountController::class . ':index');
+        });
+
     });
 };
